@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.usecase.CreateListing;
 
+import com.example.usecase.ExpensiveService;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -37,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 public class ListingController {
 
     final CreateListing createListing;
+    final ExpensiveService expensiveService;
 
     @PostMapping(value = "/listings", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,7 +51,11 @@ public class ListingController {
         Assert.notNull(listing.getPrice(), "Price must not be empty!");
 
         createListing.createListing(listing.getMake(), listing.getModel(), listing.getPrice());
+    }
 
+    @GetMapping(value = "/listings")
+    String getListings() {
+        return expensiveService.calculate();
     }
 
     @ExceptionHandler

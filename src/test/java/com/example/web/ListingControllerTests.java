@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.example.usecase.ExpensiveService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +46,9 @@ public class ListingControllerTests {
 
     @MockBean
     CreateListing createListingMock;
+
+    @MockBean
+    ExpensiveService expensiveService;
 
     @Test
     public void createListing() throws Exception {
